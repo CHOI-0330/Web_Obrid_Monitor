@@ -42,6 +42,7 @@ const nextConfig: NextConfig = {
       "@radix-ui/react-navigation-menu@1.2.5": "@radix-ui/react-navigation-menu",
       "react-day-picker@8.10.1": "react-day-picker",
       "react-resizable-panels@2.1.7": "react-resizable-panels",
+      "@radix-ui/react-slider@1.2.3": "@radix-ui/react-slider",
     };
     return config;
   },

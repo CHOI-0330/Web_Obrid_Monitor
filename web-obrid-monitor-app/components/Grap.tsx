@@ -21,13 +21,14 @@ export default function Grap() {
   const [fadeIntro, setFadeIntro] = useState<boolean>(false);
 
   // 타입스크립트용: telemetry 메시지인지 가드
-  function isTelemetryMessage(msg: any): msg is TelemetryMessage {
+  function isTelemetryMessage(msg: unknown): msg is TelemetryMessage {
+    if (typeof msg !== "object" || msg === null) return false;
+    const m = msg as Record<string, unknown>;
     return (
-      msg &&
-      msg.type === "telemetry" &&
-      Array.isArray(msg.data_values) &&
-      Array.isArray(msg.back_values) &&
-      Array.isArray(msg.filtered)
+      m.type === "telemetry" &&
+      Array.isArray(m.data_values) &&
+      Array.isArray(m.back_values) &&
+      Array.isArray(m.filtered)
     );
   }
 
@@ -122,10 +123,10 @@ export default function Grap() {
     ws.current.onclose = () => setStatus("Disconnected");
     ws.current.onerror = () => setStatus("Error");
 
-    ws.current.onmessage = (event) => {
-      let msg: any;
+    ws.current.onmessage = (event: MessageEvent) => {
+      let msg: unknown;
       try {
-        msg = JSON.parse(event.data);
+        msg = JSON.parse(event.data as string);
       } catch {
         return;
       }
@@ -133,7 +134,7 @@ export default function Grap() {
       if (!isTelemetryMessage(msg)) {
         return;
       }
-      const telemetry = msg;
+      const telemetry = msg as TelemetryMessage;
 
       if (chartInstance.current) {
         chartInstance.current.data.datasets[0].data = telemetry.data_values;
@@ -155,7 +156,7 @@ export default function Grap() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white text-black px-4">
+    <div className="min-h-[70vh] flex flex-col items-center justify-center px-4">
       {showIntro && (
         <div
           className={`fixed inset-0 flex items-center justify-center bg-white z-50 transition-opacity duration-500 ${
@@ -165,16 +166,11 @@ export default function Grap() {
           <h1 className="text-4xl font-bold">{introText}</h1>
         </div>
       )}
-      <div className="relative w-full max-w-4xl h-[75vh] sm:h-[60vh] mb-6">
+      <div className="relative w-full max-w-4xl h-[70vh] sm:h-[60vh] mb-6 card p-3">
         <canvas ref={chartRef} className="absolute inset-0 w-full h-full" />
       </div>
-      <button
-        onClick={handleBackground}
-        className="px-8 py-4 bg-black text-white rounded-full hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-black"
-      >
-        Background
-      </button>
-      <p className="mt-4 text-sm text-gray-600">{status}</p>
+      <button onClick={handleBackground} className="btn">Background</button>
+      <p className="mt-4 text-sm text-muted">{status}</p>
     </div>
   );
 }

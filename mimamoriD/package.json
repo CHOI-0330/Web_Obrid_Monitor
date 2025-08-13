@@ -1,5 +1,5 @@
 {
-  "name": "web-obrid-monitor-app",
+  "name": "mimamoriD-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -33,7 +33,6 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "chart.js": "^4.5.0",
     "class-variance-authority": "^0.7.1",
-    "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.525.0",

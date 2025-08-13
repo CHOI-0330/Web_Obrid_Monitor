@@ -193,24 +193,24 @@ export const EventDisplay: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto p-4">
-      <div className="bg-white rounded-lg shadow p-4 border border-gray-200 space-y-4">
+      <div className="card p-4 space-y-4">
         <div className="flex justify-between items-center">
-          <div className="text-sm text-gray-400">最新イベント</div>
-          <Link href="/grap" className="text-sm text-blue-500 hover:underline">
+          <div className="text-sm text-muted">最新イベント</div>
+          <Link href="/grap" className="text-sm text-brand hover:underline">
             詳細
           </Link>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <div className="text-gray-600 text-xs">ピーク位置</div>
+            <div className="text-muted text-xs">ピーク位置</div>
             <div className="font-medium">
               {peakPosition != null ? peakPosition.toFixed(1) : "–"}
             </div>
           </div>
 
           <div>
-            <div className="text-gray-600 text-xs">状態</div>
+            <div className="text-muted text-xs">状態</div>
             <div className="flex items-center justify-between font-medium">
               <span>{statusLabels[status]}</span>
               {renderStatusIcon(status)}
@@ -218,14 +218,14 @@ export const EventDisplay: React.FC = () => {
           </div>
 
           <div>
-            <div className="text-gray-600 text-xs">対象者</div>
+            <div className="text-muted text-xs">対象者</div>
             <div className="font-medium">
               {person != null ? personLabels[person] : "未検出"}
             </div>
           </div>
 
           <div>
-            <div className="text-gray-600 text-xs">メッセージ</div>
+            <div className="text-muted text-xs">メッセージ</div>
             <div className="font-medium">{message || "–"}</div>
           </div>
         </div>
